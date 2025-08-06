@@ -39,9 +39,10 @@ export function DataTable() {
     exportToCSV(filteredAndSortedData, `transactions-${new Date().toISOString().split('T')[0]}.csv`);
   };
 
-  const getStatusBadge = (status: string) => {
+  const getStatusBadge = (status: string | number | boolean | Date) => {
     const baseClasses = "px-2 py-1 rounded-full text-xs font-medium transition-colors";
-    switch (status.toLowerCase()) {
+    const statusStr = status?.toString().toLowerCase() || '';
+    switch (statusStr) {
       case 'paid':
         return `${baseClasses} bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200`;
       case 'pending':
@@ -59,7 +60,7 @@ export function DataTable() {
         const matchesSearch = Object.values(row).some(value => 
           value.toString().toLowerCase().includes(searchTerm.toLowerCase())
         );
-        const matchesStatus = statusFilter === 'all' || row.status.toLowerCase() === statusFilter;
+        const matchesStatus = statusFilter === 'all' || (row.status && row.status.toString().toLowerCase() === statusFilter);
         return matchesSearch && matchesStatus;
       })
       .sort((a, b) => {
@@ -168,21 +169,21 @@ export function DataTable() {
                 }`}
               >
                 <td className="p-4">
-                  <div className="font-medium text-sm">{row.name}</div>
+                  <div className="font-medium text-sm">{row.name?.toString()}</div>
                 </td>
                 <td className="p-4">
-                  <div className="text-sm text-muted-foreground">{row.email}</div>
+                  <div className="text-sm text-muted-foreground">{row.email?.toString()}</div>
                 </td>
                 <td className="p-4">
-                  <div className="text-sm font-medium">{row.amount}</div>
+                  <div className="text-sm font-medium">{row.amount?.toString()}</div>
                 </td>
                 <td className="p-4">
                   <span className={getStatusBadge(row.status)}>
-                    {row.status}
+                    {row.status?.toString()}
                   </span>
                 </td>
                 <td className="p-4">
-                  <div className="text-sm text-muted-foreground">{row.date}</div>
+                  <div className="text-sm text-muted-foreground">{row.date?.toString()}</div>
                 </td>
               </tr>
             ))}

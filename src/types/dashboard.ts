@@ -35,11 +35,12 @@ export interface DashboardData {
   revenueData: RevenueData[];
   userData: UserData[];
   conversionData: ConversionData[];
+  tableData: TableRow[];
 }
 
 export interface TableRow {
   id: string;
-  [key: string]: any;
+  [key: string]: string | number | boolean | Date;
 }
 
 export interface TableColumn {

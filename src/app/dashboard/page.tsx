@@ -1,20 +1,84 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { OverviewCards } from '@/components/dashboard/overview-cards';
 import { RevenueChart } from '@/components/dashboard/charts/revenue-chart';
 import { UsersChart } from '@/components/dashboard/charts/users-chart';
 import { ConversionChart } from '@/components/dashboard/charts/conversion-chart';
 import { DataTable } from '@/components/dashboard/data-table';
-import { LoadingSkeleton } from '@/components/shared/loading-skeleton';
+import { DataFilters } from '@/components/shared/data-filters';
+import { DashboardSkeleton } from '@/components/shared/loading-skeleton';
+import { exportToCSV, exportToPDF } from '@/lib/export-utils';
 import { useDashboardData } from '@/hooks/use-dashboard-data';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, TrendingUp, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function DashboardPage() {
   const { data, isLoading, error } = useDashboardData();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [filteredData, setFilteredData] = useState(data?.tableData || []);
+
+  useEffect(() => {
+    if (data?.tableData) {
+      setFilteredData(data.tableData);
+    }
+  }, [data]);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    window.location.reload();
+  };
+
+  const handleExportCSV = () => {
+    if (filteredData.length > 0) {
+      const filename = `admybrand-dashboard-${new Date().toISOString().split('T')[0]}.csv`;
+      exportToCSV(filteredData, filename);
+    }
+  };
+
+  const handleExportPDF = () => {
+    exportToPDF('dashboard-content', `admybrand-dashboard-${new Date().toISOString().split('T')[0]}.pdf`);
+  };
+
+  const handleFilterChange = (filters: {
+    startDate: Date | null;
+    endDate: Date | null;
+    searchTerm: string;
+    status: string;
+    category: string;
+  }) => {
+    if (!data?.tableData) return;
+    
+    let filtered = [...data.tableData];
+    
+    // Apply search filter
+    if (filters.searchTerm) {
+      filtered = filtered.filter(item => 
+        Object.values(item).some(value => 
+          String(value).toLowerCase().includes(filters.searchTerm.toLowerCase())
+        )
+      );
+    }
+    
+    // Apply date range filter
+    if (filters.startDate && filters.endDate) {
+      filtered = filtered.filter(item => {
+        const dateValue = item.date || item.created_at;
+        const itemDate = new Date(typeof dateValue === 'string' || typeof dateValue === 'number' || dateValue instanceof Date ? dateValue : Date.now());
+        return itemDate >= filters.startDate! && itemDate <= filters.endDate!;
+      });
+    }
+    
+    // Apply status filter
+    if (filters.status !== 'all') {
+      filtered = filtered.filter(item => item.status === filters.status);
+    }
+    
+    setFilteredData(filtered);
+  };
 
   if (isLoading) {
-    return <LoadingSkeleton />;
+    return <DashboardSkeleton />;
   }
 
   if (error) {
@@ -48,7 +112,9 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-4xl font-bold tracking-tight text-foreground mb-2">Dashboard</h2>
-          <p className="text-muted-foreground text-lg">Welcome back! Here's what's happening with your analytics today.</p>
+                      <p className="text-muted-foreground mt-2 text-lg">
+              Welcome back! Here&apos;s what&apos;s happening with your business today.
+            </p>
         </div>
         <Button variant="outline" className="gap-2 text-base px-6 py-3">
           <RefreshCw className="w-5 h-5" />

@@ -29,7 +29,21 @@ export function ConversionChart({ data }: ConversionChartProps) {
     fill: COLORS[index % COLORS.length]
   }));
 
-  const CustomTooltip = ({ active, payload }: any) => {
+    const CustomTooltip = ({ active, payload, label }: {
+    active?: boolean;
+    payload?: Array<{
+      color: string;
+      value: number;
+      payload: {
+        name: string;
+        value: number;
+        conversionRate: number;
+        conversions: number;
+        visitors: number;
+      };
+    }>;
+    label?: string;
+  }) => {
     if (active && payload && payload[0]) {
       const data = payload[0].payload;
       return (

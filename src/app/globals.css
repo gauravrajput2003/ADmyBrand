@@ -110,6 +110,16 @@ p {
   color: var(--foreground);
 }
 
+/* Shimmer animation for loading skeletons */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 /* Improved text colors and contrast */
 .text-muted-foreground {
   color: #6b7280 !important;

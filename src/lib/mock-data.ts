@@ -1,4 +1,4 @@
-import { DashboardData, DashboardMetric, RevenueData, UserData, ConversionData } from '@/types/dashboard';
+import { DashboardData, DashboardMetric, RevenueData, UserData, ConversionData, TableRow } from '@/types/dashboard';
 
 export const mockMetrics: DashboardMetric[] = [
   {
@@ -65,9 +65,63 @@ export const mockConversionData: ConversionData[] = [
   { name: 'Jul', value: 15.2, conversionRate: 15.2, conversions: 152, visitors: 1000 },
 ];
 
+export const mockTableData: TableRow[] = [
+  {
+    id: '1',
+    name: 'John Doe',
+    email: 'john@example.com',
+    status: 'active',
+    revenue: '$1,234',
+    date: '2024-08-01',
+    category: 'marketing',
+    source: 'Organic Search'
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    email: 'jane@example.com',
+    status: 'pending',
+    revenue: '$856',
+    date: '2024-08-02',
+    category: 'sales',
+    source: 'Social Media'
+  },
+  {
+    id: '3',
+    name: 'Mike Johnson',
+    email: 'mike@example.com',
+    status: 'active',
+    revenue: '$2,109',
+    date: '2024-08-03',
+    category: 'analytics',
+    source: 'Direct Traffic'
+  },
+  {
+    id: '4',
+    name: 'Sarah Wilson',
+    email: 'sarah@example.com',
+    status: 'completed',
+    revenue: '$567',
+    date: '2024-08-04',
+    category: 'support',
+    source: 'Email Campaign'
+  },
+  {
+    id: '5',
+    name: 'David Brown',
+    email: 'david@example.com',
+    status: 'inactive',
+    revenue: '$3,421',
+    date: '2024-08-05',
+    category: 'marketing',
+    source: 'Paid Ads'
+  }
+];
+
 export const mockDashboardData: DashboardData = {
   metrics: mockMetrics,
   revenueData: mockRevenueData,
   userData: mockUserData,
   conversionData: mockConversionData,
+  tableData: mockTableData,
 };
