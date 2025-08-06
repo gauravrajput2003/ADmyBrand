@@ -27,17 +27,17 @@ export function MetricCard({ metric }: MetricCardProps) {
 
   return (
     <div className="relative group rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1 p-6">
-      <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <p className="text-sm font-medium text-muted-foreground">{metric.title}</p>
-        <div className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors">
-          <IconComponent className="h-4 w-4" />
+      <div className="flex flex-row items-center justify-between space-y-0 pb-3">
+        <p className="text-base font-medium text-muted-foreground">{metric.title}</p>
+        <div className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors">
+          <IconComponent className="h-5 w-5" />
         </div>
       </div>
       <div>
-        <div className="text-2xl font-bold tracking-tight">{formattedValue}</div>
-        <div className="flex items-center gap-1 mt-1">
-          <TrendIcon className={`h-3 w-3 ${getChangeColor(metric.changeType)}`} />
-          <p className={`text-xs font-medium ${getChangeColor(metric.changeType)}`}>
+        <div className="text-3xl font-bold tracking-tight text-foreground mb-2">{formattedValue}</div>
+        <div className="flex items-center gap-2 mt-2">
+          <TrendIcon className={`h-4 w-4 ${getChangeColor(metric.changeType)}`} />
+          <p className={`text-sm font-medium ${getChangeColor(metric.changeType)}`}>
             {changeText} from last month
           </p>
         </div>

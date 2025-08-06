@@ -21,10 +21,10 @@ export default function DashboardPage() {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="text-center">
-          <div className="text-red-500 text-lg font-semibold mb-2">Error loading dashboard data</div>
-          <p className="text-muted-foreground mb-4">{error}</p>
-          <Button onClick={() => window.location.reload()} variant="outline">
-            <RefreshCw className="w-4 h-4 mr-2" />
+          <div className="text-red-500 text-xl font-semibold mb-3">Error loading dashboard data</div>
+          <p className="text-muted-foreground mb-6 text-lg">{error}</p>
+          <Button onClick={() => window.location.reload()} variant="outline" className="text-base px-6 py-3">
+            <RefreshCw className="w-5 h-5 mr-2" />
             Try Again
           </Button>
         </div>
@@ -36,24 +36,22 @@ export default function DashboardPage() {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="text-center">
-          <div className="text-lg font-semibold mb-2">No data available</div>
-          <p className="text-muted-foreground">Please check back later.</p>
+          <div className="text-xl font-semibold mb-3 text-foreground">No data available</div>
+          <p className="text-muted-foreground text-lg">Please check back later.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 space-y-6 p-8 pt-6 animate-in fade-in-50 duration-500">
+    <div className="flex-1 space-y-8 p-8 pt-6 animate-in fade-in-50 duration-500">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h2>
-          <p className="text-muted-foreground mt-2">
-            Welcome to ADmyBRAND Insights - Your marketing analytics hub
-          </p>
+          <h2 className="text-4xl font-bold tracking-tight text-foreground mb-2">Dashboard</h2>
+          <p className="text-muted-foreground text-lg">Welcome back! Here's what's happening with your analytics today.</p>
         </div>
-        <Button variant="outline" size="sm" className="gap-2">
-          <RefreshCw className="w-4 h-4" />
+        <Button variant="outline" className="gap-2 text-base px-6 py-3">
+          <RefreshCw className="w-5 h-5" />
           Refresh Data
         </Button>
       </div>
